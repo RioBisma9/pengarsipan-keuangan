@@ -7,6 +7,7 @@ use App\Models\ArchiveFile;
 use App\Models\DocumentFolder;
 use App\Models\DocumentRack;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DocumentFolderController extends Controller
 {
@@ -62,7 +63,8 @@ class DocumentFolderController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $folder = DocumentFolder::findOrFail($id);
+        return view('admin.form.archive-folder-edit-form', compact('folder'));
     }
 
     /**
@@ -70,7 +72,15 @@ class DocumentFolderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $folder = DocumentFolder::findOrFail($id);
+
+        $folder->update([
+            'folder_name' => $request->name,
+            'kode_folder' => $request->kode_folder,
+            'deskripsi' => $request->deskripsi,
+        ]);
+
+        return redirect()->route('rak.show', ['rak' => $folder->document_rack_id])->with('success', 'Berhasil Mengupdate rak!!');
     }
 
     /**
@@ -78,6 +88,18 @@ class DocumentFolderController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $folder = DocumentFolder::findOrFail($id);
+        $files = ArchiveFile::where('document_folder_id', $folder->id)->get();
+
+        // Hapus semua file PDF di storage
+        foreach ($files as $file) {
+            if ($file->path_file && Storage::disk('public')->exists($file->path_file)) {
+                Storage::disk('public')->delete($file->path_file);
+            }
+        }
+
+        $folder->delete();
+
+        return redirect()->route('rak.show', ['rak' => $folder->document_rack_id])->with('success', 'Berhasil Menghapus rak!!');
     }
 }

@@ -13,5 +13,11 @@ class DocumentRack extends Model
         'rack_name',
         'kode_rack',
         'keterangan',
+        'category_id',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

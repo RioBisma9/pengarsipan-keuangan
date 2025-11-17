@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ArchiveFileController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DocumentFolderController;
 use App\Http\Controllers\Admin\DocumentRackController;
+use App\Http\Controllers\Admin\SearchController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -51,3 +53,5 @@ Route::post('/file/upload/{id}', [ArchiveFileController::class, 'update_new_file
 Route::resource('/document/rak', DocumentRackController::class);
 Route::resource('/document/folder', DocumentFolderController::class);
 Route::resource('/document/file', ArchiveFileController::class);
+Route::resource('/document/search', SearchController::class);
+Route::resource('/category', CategoryController::class);

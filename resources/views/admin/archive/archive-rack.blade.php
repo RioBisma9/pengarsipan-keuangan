@@ -6,17 +6,51 @@
     </x-slot>
 
     <div class="py-10 bg-gray-50 min-h-screen">
-        <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white shadow-md sm:rounded-xl p-6 border border-gray-200">
-                {{-- Tombol Tambah --}}
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-lg font-semibold text-gray-700">Kelola Rak Arsip</h3>
-                    <a href="{{ route('rak.create') }}"
-                        class="inline-flex items-center gap-2 bg-green-500 text-white font-medium px-4 py-2 rounded-lg hover:bg-green-600 transition">
-                        <img src="https://img.icons8.com/?size=24&id=48427&format=png&color=ffffff" alt="plus">
-                        Tambah Rak Arsip
-                    </a>
+        <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
+
+            {{-- Search Bar --}}
+            <form action="{{ route('search.index') }}" method="GET" class="mb-6">
+                <div class="relative flex items-center">
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama file"
+                        class="w-full bg-white border border-gray-300 rounded-xl py-2.5 pl-12 pr-4 text-gray-700 placeholder-gray-400 shadow-sm focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition">
+
+                    {{-- <div class="absolute left-4 text-gray-400">
+                        <img src="https://img.icons8.com/?size=24&id=111098&format=png&color=9ca3af" class="w-5" />
+                    </div> --}}
+
+                    <button type="submit"
+                        class="ml-3 px-5 py-2.5 bg-indigo-600 text-white font-medium rounded-xl hover:bg-indigo-700 shadow-md transition flex items-center gap-2">
+                        <img src="https://img.icons8.com/?size=24&id=7695&format=png&color=ffffff" class="w-5" />
+                        Cari
+                    </button>
                 </div>
+            </form>
+
+
+
+            <div class="bg-white shadow-md sm:rounded-xl p-6 border border-gray-200">
+                <div class="flex justify-between items-start mb-6">
+                    <h3 class="text-lg font-semibold text-gray-700">Kelola Rak Arsip</h3>
+
+                    <div class="flex items-center gap-3">
+                        {{-- Tombol Tambah Kategori --}}
+                        <a href="{{ route('category.create') }}"
+                            class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2 rounded-xl shadow-md transition">
+                            <img src="https://img.icons8.com/?size=24&id=48427&format=png&color=ffffff"
+                                class="w-5" />
+                            Tambah Kategori Rak
+                        </a>
+
+                        {{-- Tombol Tambah Rak --}}
+                        <a href="{{ route('rak.create') }}"
+                            class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-medium px-4 py-2 rounded-xl shadow-md transition">
+                            <img src="https://img.icons8.com/?size=24&id=48427&format=png&color=ffffff"
+                                class="w-5" />
+                            Tambah Rak Arsip
+                        </a>
+                    </div>
+                </div>
+
 
                 {{-- Daftar Rak --}}
                 @php $no = 1; @endphp
@@ -34,10 +68,33 @@
                                         class="w-8 h-8 flex items-center justify-center rounded-full bg-indigo-100 text-indigo-600 font-semibold">
                                         {{ $no++ }}
                                     </div>
-                                    <div>
-                                        <p class="text-gray-800 font-medium">{{ $rak->rack_name }}</p>
-                                        <p class="text-sm text-gray-500">Kode Rak: {{ $rak->kode_rack ?? '-' }}</p>
+                                    <div class="space-y-1">
+                                        {{-- Nama Rak --}}
+                                        <p class="text-gray-900 font-semibold text-base leading-tight">
+                                            {{ $rak->rack_name }}
+                                        </p>
+
+                                        {{-- Informasi Detail --}}
+                                        <div class="flex items-center gap-4 text-sm text-gray-600">
+
+                                            {{-- Kode Rak --}}
+                                            <span class="flex items-center gap-1 bg-gray-100 px-2 py-0.5 rounded-lg">
+                                                <img src="https://img.icons8.com/?size=16&id=7880&format=png&color=4b5563"
+                                                    class="w-4 opacity-70">
+                                                {{ $rak->kode_rack ?? '-' }}
+                                            </span>
+
+                                            {{-- Kategori --}}
+                                            <span
+                                                class="flex items-center gap-1 bg-indigo-100 px-2 py-0.5 rounded-lg text-indigo-700">
+                                                <img src="https://img.icons8.com/?size=16&id=99268&format=png&color=4f46e5"
+                                                    class="w-4 opacity-70">
+                                                {{ $rak->category->category_name ?? '-' }}
+                                            </span>
+
+                                        </div>
                                     </div>
+
                                 </a>
 
                                 {{-- Tombol Aksi --}}

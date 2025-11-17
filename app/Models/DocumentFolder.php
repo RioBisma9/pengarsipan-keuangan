@@ -15,4 +15,9 @@ class DocumentFolder extends Model
         'kode_folder',
         'deskripsi',
     ];
+
+    public function rak()
+    {
+        return $this->belongsTo(DocumentRack::class, 'document_rack_id');
+    }
 }

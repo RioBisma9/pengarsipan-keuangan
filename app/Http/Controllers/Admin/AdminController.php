@@ -15,7 +15,8 @@ class AdminController extends Controller
 
     public function input_archive()
     {
-        $raks = DocumentRack::all();
+        // $raks = DocumentRack::with('category')->all();
+        $raks = DocumentRack::with('category')->get();
         return view('admin.archive.archive-rack', compact('raks'));
     }
 }

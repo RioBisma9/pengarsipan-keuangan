@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ArchiveFile extends Model
 {
@@ -15,4 +16,9 @@ class ArchiveFile extends Model
         'path_file',
         'keterangan',
     ];
+
+    public function folder()
+    {
+        return $this->belongsTo(DocumentFolder::class, 'document_folder_id');
+    }
 }

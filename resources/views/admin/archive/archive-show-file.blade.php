@@ -104,7 +104,7 @@
 
                 {{-- Tombol Kembali --}}
                 <div class="pt-4">
-                    <a href="{{ route('admin.rack.archive') }}"
+                    <a href="{{ route('folder.show', $archives->document_folder_id) }}"
                         class="inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-lg transition">
                         ← Kembali
                     </a>

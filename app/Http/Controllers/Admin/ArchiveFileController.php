@@ -101,7 +101,8 @@ class ArchiveFileController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $file = ArchiveFile::findOrFail($id);
+        return view('admin.form.archive-file-edit-form', compact('file'));
     }
 
     /**
@@ -109,7 +110,36 @@ class ArchiveFileController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $file = ArchiveFile::findOrFail($id);
+
+        $request->validate([
+            'file_archive' => 'nullable|mimes:pdf|max:20480', // 20MB
+        ]);
+
+        if ($request->hasFile('file_archive')) {
+
+            // 1. Hapus file lama jika ada
+            if ($file->path_file && Storage::disk('public')->exists($file->path_file)) {
+                Storage::disk('public')->delete($file->path_file);
+            }
+
+            // 2. Upload file baru
+            $uploaded = $request->file('file_archive');
+            $filename = $uploaded->getClientOriginalName();
+
+            // Simpan ke storage/public/pdf
+            $uploaded->storeAs('uploads', $filename, 'public');
+
+            // 3. Update path di database
+            $file->path_file = 'uploads/' . $filename;
+        }
+
+        $file->name_file = $request->name;
+        $file->keterangan = $request->keterangan;
+
+        $file->save();
+
+        return redirect()->route('folder.show', ['folder' => $file->document_folder_id])->with('success', 'File berhasil diperbarui!');
     }
 
     /**
@@ -117,6 +147,14 @@ class ArchiveFileController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $archive = ArchiveFile::findOrFail($id);
+
+        if ($archive->path_file && Storage::disk('public')->exists($archive->path_file)) {
+            Storage::disk('public')->delete($archive->path_file);
+        }
+
+        $archive->delete();
+
+        return back()->with('success', 'File berhasil dihapus!');
     }
 }
