@@ -20,6 +20,7 @@ class Pengajuan extends Model
         'path_file_status_kelengkapan',
         'status_diarsipkan',
         'status_dikembalikan',
+        'digital_archive_id',
         'message',
     ];
 
@@ -31,5 +32,10 @@ class Pengajuan extends Model
     public function finance_officer()
     {
         return $this->BelongsTo(User::class, 'finance_officers_id');
+    }
+
+    public function category_archive()
+    {
+        return $this->belongsTo(DigitalArchive::class, 'digital_archive_id');
     }
 }

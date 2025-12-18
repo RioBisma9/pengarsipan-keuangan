@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\SearchController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\YearController;
 use App\Http\Controllers\Bendahara\BendaharaController;
+use App\Http\Controllers\Bendahara\DigitalArchiveController;
 use App\Http\Controllers\Keuangan\KeuanganController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\PengajuanController;
@@ -85,6 +86,8 @@ Route::get('/keuangan/download/{id}', [PengajuanController::class, 'download_pen
 // ===================================================================== Route Bendahara
 Route::get('/bendahara/sign/{id}', [BendaharaController::class, 'document_sign'])->name('bendahara.sign');
 Route::put('/bendahara/verifikasi/{id}', [PengajuanController::class, 'final_verification'])->name('bendahara.verification');
+Route::get('/archive/pengajuan/{id}', [DigitalArchiveController::class, 'show_in_year'])->name('digital.archive');
+Route::get('/archive/pengajuan/show/{id}', [DigitalArchiveController::class, 'show_digital_archive'])->name('digital.archive.show');
 
 // =================================================================== Route Resource
 Route::resource('/cabinet', CabinetController::class);
@@ -99,3 +102,4 @@ Route::resource('/document/search', SearchController::class);
 Route::resource('/account', AccountManageController::class);
 
 Route::resource('/pengajuan', PengajuanController::class);
+Route::resource('/archive/digital', DigitalArchiveController::class);

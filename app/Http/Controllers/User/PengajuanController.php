@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\DigitalArchive;
 use App\Models\Pengajuan;
 use App\Models\Role;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -149,7 +151,7 @@ class PengajuanController extends Controller
 
     public function final_verification(Request $request, $id)
     {
-        $pengajuan = Pengajuan::findOrFail($id);
+        $pengajuan = Pengajuan::with('user')->findOrFail($id);
 
         // === TENTUKAN FILE SOURCE ===
         if ($request->hasFile('file_pengajuan')) {
@@ -176,6 +178,26 @@ class PengajuanController extends Controller
             'path_file_pengajuan' => $sourcePath,
             'status_diarsipkan'   => 1,
         ]);
+
+        // add to digital archive
+        $tahun = Carbon::now()->year;
+        $divisi_pengaju = $pengajuan->user->role;
+
+        $digital_archive = DigitalArchive::where('divisi_name', $divisi_pengaju)->where('year', $tahun)->first();
+
+        if (isset($digital_archive)) {
+            $pengajuan->update([
+                'digital_archive_id' => $digital_archive->id,
+            ]);
+        } else {
+            $pengajuan_archive =  DigitalArchive::create([
+                'divisi_name' => $pengajuan->user->role,
+                'year' => $tahun,
+            ]);
+            $pengajuan->update([
+                'digital_archive_id' => $pengajuan_archive->id,
+            ]);
+        }
 
         return redirect()
             ->route('bendahara.dashboard')

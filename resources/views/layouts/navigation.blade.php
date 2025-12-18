@@ -11,6 +11,7 @@
                 </div>
 
                 @php
+                    // ============================================= bagian admin
                     $roleDashboard = match (Auth::user()->role) {
                         'Admin' => route('admin.dashboard'),
                         'Keuangan' => route('keuangan.dashboard'),
@@ -42,6 +43,12 @@
                         'Admin', 'Keuangan' => '#',
                         default => route('user.worklist'),
                     };
+
+                    // =============================================== bagian keuangan
+                    $roleDigitalArsip = match (Auth::user()->role) {
+                        'Keuangan', 'Bendahara' => route('digital.index'),
+                        default => route('pengajuan.index'),
+                    };
                 @endphp
 
                 <!-- Navigation Links -->
@@ -63,11 +70,21 @@
                     </div>
                 @elseif (Auth::user()->role == 'Keuangan')
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link href="{{ $roleDigitalArsip }}" :active="request()->routeIs('dashboard')">
+                            {{ __('Digital Arsip') }}
+                        </x-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link href="{{ $roleInputArsip }}" :active="request()->routeIs('dashboard')">
                             {{ __('Input Arsip') }}
                         </x-nav-link>
                     </div>
                 @elseif (Auth::user()->role == 'Bendahara')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link href="{{ $roleDigitalArsip }}" :active="request()->routeIs('dashboard')">
+                            {{ __('Digital Arsip') }}
+                        </x-nav-link>
+                    </div>
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link href="{{ $roleInputArsip }}" :active="request()->routeIs('dashboard')">
                             {{ __('Input Arsip') }}
