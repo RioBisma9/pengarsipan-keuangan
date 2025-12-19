@@ -14,7 +14,7 @@ class SubCategory extends Model
         'category_id',
         'sub_category_name',
         'sub_category_code',
-        'keterangan',
+        'description',
     ];
 
     public function category()
@@ -22,10 +22,10 @@ class SubCategory extends Model
         return $this->BelongsTo(Category::class);
     }
 
-    public function years()
-    {
-        return $this->morphMany(Year::class, 'yearable');
-    }
+    // public function years()
+    // {
+    //     return $this->morphMany(Year::class, 'yearable');
+    // }
 
     public function racks()
     {

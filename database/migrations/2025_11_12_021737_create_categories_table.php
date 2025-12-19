@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('cabinet_id')->constrained()->cascadeOnDelete();
             $table->string('category_name');
-            $table->string('category_code');
             $table->string('url_icon')->nullable();
             $table->string('path_icon')->nullable();
             $table->string('description')->nullable();

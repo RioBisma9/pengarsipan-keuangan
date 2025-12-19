@@ -20,7 +20,8 @@ class BendaharaController extends Controller
 
     public function document_sign($id)
     {
-        $pengajuan = Pengajuan::with('user')->with('finance_officer')->first();
+        $pengajuan = Pengajuan::with('user')->with('finance_officer')
+            ->where('id', $id)->first();
         return view('bendahara.final-verifikasi', compact('pengajuan'));
     }
 }

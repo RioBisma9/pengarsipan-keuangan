@@ -30,10 +30,10 @@
             </div>
 
             {{-- Daftar Tahun --}}
-            @if ($yearsDirect->count() > 0)
+            @if ($years->count() > 0)
                 <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
                     @php $no = 1; @endphp
-                    @foreach ($yearsDirect as $year)
+                    @foreach ($years as $year)
                         <div
                             class="flex items-center justify-between p-5 transition duration-150 ease-in-out hover:bg-gray-50">
 

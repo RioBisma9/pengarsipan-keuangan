@@ -47,27 +47,13 @@ class YearController extends Controller
             'subcategory_id' => 'nullable|exists:sub_categories,id',
         ]);
 
-        if ($request->subcategory_id) {
-            // Year milik SubCategory
-            $sub = SubCategory::findOrFail($request->subcategory_id);
-            $sub->years()->create([
-                'year' => $request->year,
-            ]);
+        Year::create([
+            'year' => $request->year,
+            'category_id' => $request->category_id,
+            'sub_category_id' => $request->subcategory_id,
+        ]);
 
-            $redirectId = $sub->category_id; // balik ke Category
-        } else if ($request->category_id) {
-            // Year langsung milik Category
-            $category = Category::findOrFail($request->category_id);
-            $category->years()->create([
-                'year' => $request->year,
-            ]);
-
-            $redirectId = $category->id;
-        } else {
-            return back()->with('error', 'Category atau SubCategory harus dipilih.');
-        }
-
-        return redirect()->route('category.show', ['category' => $redirectId])
+        return redirect()->route('category.show', ['category' => $request->category_id])
             ->with('success', 'Berhasil Menambahkan Tahun');
     }
 
@@ -80,21 +66,10 @@ class YearController extends Controller
         $year = Year::findOrFail($id);
 
         // Ambil racks milik Year
-        $racks = $year->racks; // pastikan Year model punya hasMany('DocumentRack', 'year_id')
+        $racks = DocumentRack::where('year_id', $year->id)->get();
+        $category = Category::where('id', $year->category_id)->first();
 
-        // Ambil parent Year (Category atau SubCategory)
-        $parent = $year->yearable;
-
-        // Tentukan cabinet_id untuk tombol kembali
-        if ($parent instanceof Category) {
-            $cabinetId = $parent->cabinet_id;
-        } elseif ($parent instanceof SubCategory) {
-            $cabinetId = $parent->category->cabinet_id ?? null;
-        } else {
-            $cabinetId = null;
-        }
-
-        return view('admin.input_archive.rack.archive-rack', compact('racks', 'year', 'cabinetId'));
+        return view('admin.input_archive.rack.archive-rack', compact('racks', 'year', 'category'));
     }
 
 

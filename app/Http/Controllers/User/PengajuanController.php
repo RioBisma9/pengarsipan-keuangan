@@ -427,8 +427,7 @@ class PengajuanController extends Controller
     public function edit(string $id)
     {
         $pengajuan = Pengajuan::findOrFail($id);
-        $roles = Role::all();
-        return view('user.pengajuan.pengajuan-edit', compact('pengajuan', 'roles'));
+        return view('user.pengajuan.pengajuan-edit', compact('pengajuan'));
     }
 
     /**

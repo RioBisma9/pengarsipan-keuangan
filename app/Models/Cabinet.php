@@ -13,7 +13,8 @@ class Cabinet extends Model
         'cabinet_name',
         'cabinet_code',
         'total_racks',
-        'deskripsi',
+        'total_document',
+        'description',
     ];
 
     public function categories()

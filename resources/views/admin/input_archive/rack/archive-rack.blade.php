@@ -165,7 +165,7 @@
                 @endif
                 {{-- Tombol Kembali --}}
                 <div class="mt-6">
-                    <a href="{{ $cabinetId ? route('cabinet.show', $cabinetId) : '#' }}"
+                    <a href="{{ route('cabinet.show', $category->cabinet_id) }}"
                         class="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 border border-gray-300 text-gray-700 rounded-lg font-medium transition">
                         Kembali
                     </a>

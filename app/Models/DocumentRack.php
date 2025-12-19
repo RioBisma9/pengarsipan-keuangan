@@ -11,8 +11,8 @@ class DocumentRack extends Model
 
     protected $fillable = [
         'rack_name',
-        'kode_rack',
-        'keterangan',
+        'rack_code',
+        'description',
         'year_id',
     ];
 

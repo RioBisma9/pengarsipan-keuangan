@@ -10,15 +10,15 @@ class Year extends Model
     use HasFactory;
 
     protected $fillable = [
-        'yearable_id',
-        'yearable_type',
+        'category_id',
+        'sub_category_id',
         'year',
     ];
 
-    public function yearable()
-    {
-        return $this->morphTo();
-    }
+    // public function yearable()
+    // {
+    //     return $this->morphTo();
+    // }
 
     public function racks()
     {

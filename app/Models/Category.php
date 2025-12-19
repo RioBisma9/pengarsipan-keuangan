@@ -12,8 +12,9 @@ class Category extends Model
     protected $fillable = [
         'cabinet_id',
         'category_name',
-        'deskripsi',
+        'description',
         'url_icon',
+        'path_icon',
     ];
 
     public function cabinet()
@@ -26,10 +27,10 @@ class Category extends Model
         return $this->hasMany(SubCategory::class, 'category_id');
     }
 
-    public function years()
-    {
-        return $this->morphMany(Year::class, 'yearable');
-    }
+    // public function years()
+    // {
+    //     return $this->morphMany(Year::class, 'yearable');
+    // }
 
     public function racks()
     {

@@ -14,9 +14,9 @@ class ArchiveFile extends Model
 
     protected $fillable = [
         'document_folder_id',
-        'name_file',
-        'path_file',
-        'keterangan',
+        'file_name',
+        'file_path',
+        'description',
     ];
 
     public function folder()

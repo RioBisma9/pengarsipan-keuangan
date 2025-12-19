@@ -41,8 +41,8 @@ class DocumentFolderController extends Controller
         DocumentFolder::create([
             'document_rack_id' => $request->document_rack_id,
             'folder_name' => $request->name,
-            'kode_folder' => $request->kode_folder,
-            'deskripsi' => $request->deskripsi,
+            'folder_code' => $request->kode_folder,
+            'description' => $request->deskripsi,
         ]);
 
         return redirect()->route('rak.show', ['rak' => $request->document_rack_id])->with('success', 'berhasil menambahkan folder!!');
@@ -76,8 +76,8 @@ class DocumentFolderController extends Controller
 
         $folder->update([
             'folder_name' => $request->name,
-            'kode_folder' => $request->kode_folder,
-            'deskripsi' => $request->deskripsi,
+            'folder_code' => $request->kode_folder,
+            'description' => $request->deskripsi,
         ]);
 
         return redirect()->route('rak.show', ['rak' => $folder->document_rack_id])->with('success', 'Berhasil Mengupdate rak!!');

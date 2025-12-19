@@ -40,7 +40,7 @@ class CabinetController extends Controller
             'cabinet_name' => $request->name,
             'cabinet_code' => $request->code,
             'total_racks' => 0,
-            'deskripsi' => $request->deskripsi,
+            'description' => $request->deskripsi,
         ]);
 
         return redirect()->route('admin.archive')->with('success', 'Berhasil Menambahkan Cabinet');

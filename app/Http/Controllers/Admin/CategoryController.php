@@ -44,7 +44,8 @@ class CategoryController extends Controller
         Category::create([
             'cabinet_id' => $request->cabinet_id,
             'category_name' => $request->name,
-            'deskripsi' => $request->deskripsi,
+            'category_code' => $request->name,
+            'description' => $request->deskripsi,
             'url_icon' => $request->url,
         ]);
 
@@ -58,30 +59,13 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
 
-        // Ambil subcategories
-        $subcategories = $category->subcategories;
-
-        // Jika ada SubCategory → tampilkan sub_category.blade
+        $years = Year::where('category_id', $category->id)->get();
+        $subcategories = SubCategory::where('category_id', $category->id)->get();
         if ($subcategories->count() > 0) {
-
-            // yearsDirect dikosongkan supaya Blade tidak error
-            $yearsDirect = collect();
-
-            return view('admin.input_archive.sub_category.sub_category', compact(
-                'category',
-                'subcategories',
-                'yearsDirect'  // <- Dikirim tapi kosong
-            ));
+            return view('admin.input_archive.sub_category.sub_category', compact('subcategories', 'category'));
+        } else {
+            return view('admin.input_archive.year.year', compact('years', 'category'));
         }
-
-        // Jika tidak ada SubCategory → langsung halaman tahun
-        $yearsDirect = $category->years; // relasi morphMany
-
-        return view('admin.input_archive.year.year', compact(
-            'category',
-            'yearsDirect',
-            'subcategories' // ini kosong, tidak dipakai tapi aman
-        ));
     }
 
 

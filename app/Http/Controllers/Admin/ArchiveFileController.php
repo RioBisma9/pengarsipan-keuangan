@@ -76,9 +76,9 @@ class ArchiveFileController extends Controller
 
         ArchiveFile::create([
             'document_folder_id' => $request->document_folder_id,
-            'name_file' => $request->name,
-            'path_file' => $path,
-            'keterangan' => $request->keterangan,
+            'file_name' => $request->name,
+            'file_path' => $path,
+            'description' => $request->keterangan,
         ]);
 
         return redirect()->route('folder.show', ['folder' => $request->document_folder_id])->with('success', 'Berhasil Upload file');

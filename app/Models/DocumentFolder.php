@@ -12,8 +12,8 @@ class DocumentFolder extends Model
     protected $fillable = [
         'document_rack_id',
         'folder_name',
-        'kode_folder',
-        'deskripsi',
+        'folder_code',
+        'description',
     ];
 
     public function rak()

@@ -36,7 +36,7 @@ class SubCategoryController extends Controller
             'category_id' => $request->category_id,
             'sub_category_name' => $request->name,
             'sub_category_code' => $request->kode,
-            'keterangan' => $request->Keterangan,
+            'description' => $request->Keterangan,
         ]);
 
         return redirect()->route('category.show', ['category' => $request->category_id])->with('success', 'Berhasil menambahkan sub kategori');
@@ -54,9 +54,7 @@ class SubCategoryController extends Controller
         $category = Category::findOrFail($subcategory->category_id);
 
         // Ambil semua year terkait subkategori via morph
-        $years = Year::where('yearable_type', SubCategory::class)
-            ->where('yearable_id', $id)
-            ->get();
+        $years = Year::where('category_id', $category->id)->where('sub_category_id', $subcategory->id)->get();
 
         return view('admin.input_archive.sub_category.year_sub', compact('years', 'subcategory', 'category'));
     }

@@ -37,8 +37,8 @@ class DocumentRackController extends Controller
     {
         DocumentRack::create([
             'rack_name' => $request->name,
-            'kode_rack' => $request->kode_rack,
-            'keterangan' => $request->keterangan,
+            'rack_code' => $request->kode_rack,
+            'description' => $request->keterangan,
             'year_id' => $request->year_id,
         ]);
 
